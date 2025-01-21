@@ -1,0 +1,217 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 10% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+[role="textbox"] {
+  counter-reset: list-level-1 list-level-2 list-level-3 list-level-4
+    list-level-5 list-level-6 list-level-7 list-level-8 list-level-9
+    list-level-10;
+}
+
+[role="textbox"] > :not(.pt-list-item-number) {
+  counter-set: list-level-1 list-level-2 list-level-3 list-level-4 list-level-5
+    list-level-6 list-level-7 list-level-8 list-level-9 list-level-10;
+}
+
+.pt-list-item {
+  position: relative;
+}
+.pt-list-item:before {
+  position: absolute;
+}
+.pt-list-item-bullet:before {
+  content: "●";
+  font-size: 0.5rem;
+}
+.pt-list-item-number:before {
+  content: counter(list-level-1) ".";
+}
+
+.pt-list-item-level-1 {
+  padding-left: 16px;
+  counter-increment: list-level-1;
+}
+.pt-list-item-level-1:before {
+  left: 0;
+}
+
+.pt-list-item-level-2 {
+  padding-left: 24px;
+  counter-increment: list-level-2;
+}
+.pt-list-item-level-2:before {
+  left: 8px;
+}
+.pt-list-item-number.pt-list-item-level-2:before {
+  content: counter(list-level-2) ".";
+}
+.pt-list-item-bullet.pt-list-item-level-2:before {
+  content: "○";
+}
+
+.pt-list-item-level-3 {
+  padding-left: 32px;
+  counter-increment: list-level-3;
+}
+.pt-list-item-level-3:before {
+  left: 16px;
+}
+.pt-list-item-number.pt-list-item-level-3:before {
+  content: counter(list-level-3) ".";
+}
+.pt-list-item-bullet.pt-list-item-level-3:before {
+  content: "■";
+}
+
+.pt-list-item-level-4 {
+  padding-left: 40px;
+  counter-increment: list-level-4;
+}
+.pt-list-item-level-4:before {
+  left: 24px;
+}
+.pt-list-item-number.pt-list-item-level-4:before {
+  content: counter(list-level-4) ".";
+}
+
+.pt-list-item-level-5 {
+  padding-left: 48px;
+  counter-increment: list-level-5;
+}
+.pt-list-item-level-5:before {
+  left: 30px;
+}
+.pt-list-item-number.pt-list-item-level-5:before {
+  content: counter(list-level-5) ".";
+}
+.pt-list-item-bullet.pt-list-item-level-5:before {
+  content: "○";
+}
+
+.pt-list-item-level-6 {
+  padding-left: 56px;
+  counter-increment: list-level-6;
+}
+.pt-list-item-level-6:before {
+  left: 36px;
+}
+.pt-list-item-number.pt-list-item-level-6:before {
+  content: counter(list-level-6) ".";
+}
+.pt-list-item-bullet.pt-list-item-level-6:before {
+  content: "■";
+}
+
+.pt-list-item-level-7 {
+  padding-left: 64px;
+  counter-increment: list-level-7;
+}
+.pt-list-item-level-7:before {
+  left: 44px;
+}
+.pt-list-item-number.pt-list-item-level-7:before {
+  content: counter(list-level-7) ".";
+}
+
+.pt-list-item-level-8 {
+  padding-left: 72px;
+  counter-increment: list-level-8;
+}
+.pt-list-item-level-8:before {
+  left: 52px;
+}
+.pt-list-item-number.pt-list-item-level-8:before {
+  content: counter(list-level-8) ".";
+}
+.pt-list-item-bullet.pt-list-item-level-8:before {
+  content: "○";
+}
+
+.pt-list-item-level-9 {
+  padding-left: 80px;
+  counter-increment: list-level-9;
+}
+.pt-list-item-level-9:before {
+  left: 60px;
+}
+.pt-list-item-number.pt-list-item-level-9:before {
+  content: counter(list-level-9) ".";
+}
+.pt-list-item-bullet.pt-list-item-level-9:before {
+  content: "■";
+}
+
+.pt-list-item-level-10 {
+  padding-left: 88px;
+  counter-increment: list-level-10;
+}
+.pt-list-item-level-10:before {
+  left: 68px;
+}
+.pt-list-item-number.pt-list-item-level-10:before {
+  content: counter(list-level-10) ".";
+}
