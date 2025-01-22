@@ -9,6 +9,7 @@ import { Input } from "../ui/input";
 const blockObjectName: AllSchemaNameKeys = "video";
 
 export function Video(props: BlockRenderProps) {
+  console.log(`render Video`);
   const editor = useEditor();
   const initialValue =
     "url" in props.value && typeof props.value.url === "string"
@@ -49,14 +50,17 @@ export function Video(props: BlockRenderProps) {
         <form
           onSubmit={(event) => {
             event.preventDefault();
+            console.log(`submit`, props.path, value);
             editor.send({
-              type: "annotation.add",
-              annotation: {
-                name: blockObjectName,
-                value: {
-                  url: value,
+              type: "patches",
+              snapshot: [props.value],
+              patches: [
+                {
+                  type: "set",
+                  path: [...props.path, "url"],
+                  value,
                 },
-              },
+              ],
             });
             editor.send({
               type: "blur",
@@ -80,15 +84,16 @@ export function Video(props: BlockRenderProps) {
           </Button>
           <Button
             onClick={() => {
-              // editor.send({
-              //   type: "annotation.remove",
-              //   annotation: { name: annotationName },
-              // });
+              editor.send({
+                type: "patches",
+                snapshot: [props.value],
+                patches: [{ type: "unset", path: props.path }],
+              });
               editor.send({
                 type: "blur",
               });
             }}
-            disabled={!props.selected}
+            // disabled={!props.selected}
             variant="destructive"
           >
             <span className="sr-only">Remove {blockObjectName}</span>
