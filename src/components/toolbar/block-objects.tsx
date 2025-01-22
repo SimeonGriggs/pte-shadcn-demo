@@ -41,7 +41,7 @@ function BlockObjectButton({ blockObject }: BlockObjectButtonProps) {
           blockObject: {
             name: blockObject.name,
             value: {
-              url: "",
+              url: "https://www.youtube.com/watch?v=OGhqfPA_7EY",
             },
           },
         });

@@ -1,17 +1,17 @@
 import { ArrowRight, X } from "lucide-react";
 import { useRef, useState } from "react";
-import { BlockAnnotationRenderProps, useEditor } from "@portabletext/editor";
+import { useEditor, BlockRenderProps } from "@portabletext/editor";
 import { AllSchemaNameKeys } from "~/portableText/schemaDefinition";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
-const annotationName: AllSchemaNameKeys = "link";
+const blockObjectName: AllSchemaNameKeys = "video";
 
-export function Link(props: BlockAnnotationRenderProps) {
+export function Video(props: BlockRenderProps) {
   const editor = useEditor();
   const initialValue =
-    "value" in props && typeof props.value.url === "string"
+    "url" in props.value && typeof props.value.url === "string"
       ? props.value.url
       : "";
   const [value, setValue] = useState(initialValue);
@@ -26,24 +26,33 @@ export function Link(props: BlockAnnotationRenderProps) {
           inputRef.current?.focus();
         } else if (!value) {
           // Remove the annotation if the popover closes with no value
-          editor.send({
-            type: "annotation.remove",
-            annotation: { name: annotationName },
-          });
+          // editor.send({
+          //   type: "annotation.remove",
+          //   annotation: { name: blockObjectName },
+          // });
         }
       }}
     >
-      <PopoverTrigger>
-        <span className="underline text-indigo-600">{props.children}</span>
-      </PopoverTrigger>
-      <PopoverContent>
+      <span
+        data-selected={props.selected}
+        className="w-full flex items-center justify-center bg-slate-50 aspect-video data-[selected='true']:ring-2 ring-indigo-600"
+      >
+        <PopoverTrigger>
+          <img
+            src="https://i3.ytimg.com/vi/OGhqfPA_7EY/maxresdefault.jpg"
+            className="w-full h-full object-cover"
+            alt="Video thumbnail"
+          />
+        </PopoverTrigger>
+      </span>
+      <PopoverContent className="w-[--radix-popover-trigger-width]">
         <form
           onSubmit={(event) => {
             event.preventDefault();
             editor.send({
               type: "annotation.add",
               annotation: {
-                name: annotationName,
+                name: blockObjectName,
                 value: {
                   url: value,
                 },
@@ -55,26 +64,26 @@ export function Link(props: BlockAnnotationRenderProps) {
           }}
           className="flex gap-2"
         >
-          <label htmlFor={annotationName} className="sr-only">
-            {annotationName}
+          <label htmlFor={blockObjectName} className="sr-only">
+            {blockObjectName}
           </label>
           <Input
             ref={inputRef}
-            id={annotationName}
+            id={blockObjectName}
             // type="url"
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
           <Button disabled={!value} type="submit">
-            <span className="sr-only">Add {annotationName}</span>
+            <span className="sr-only">Add {blockObjectName}</span>
             <ArrowRight size="4" />
           </Button>
           <Button
             onClick={() => {
-              editor.send({
-                type: "annotation.remove",
-                annotation: { name: annotationName },
-              });
+              // editor.send({
+              //   type: "annotation.remove",
+              //   annotation: { name: annotationName },
+              // });
               editor.send({
                 type: "blur",
               });
@@ -82,7 +91,7 @@ export function Link(props: BlockAnnotationRenderProps) {
             disabled={!props.selected}
             variant="destructive"
           >
-            <span className="sr-only">Remove {annotationName}</span>
+            <span className="sr-only">Remove {blockObjectName}</span>
             <X size="4" />
           </Button>
         </form>

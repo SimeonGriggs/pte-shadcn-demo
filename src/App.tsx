@@ -21,35 +21,37 @@ export default function Home() {
 
   return (
     <div className="flex bg-slate-100 p-8 justify-center min-h-screen w-screen">
-      <div className="flex flex-col gap-4 w-[600px]">
-        <EditorProvider
-          initialConfig={{
-            schemaDefinition,
-            initialValue: value,
-            behaviors: coreBehaviors,
-          }}
-        >
-          <EditorEventListener
-            on={(event) => {
-              if (event.type === "mutation" && event.value) {
-                setValue(event.value);
-              }
+      <div className="grid grid-col-1 md:grid-cols-2 gap-8">
+        <div className="flex flex-col gap-4">
+          <EditorProvider
+            initialConfig={{
+              schemaDefinition,
+              initialValue: value,
+              behaviors: coreBehaviors,
             }}
-          />
-          <Toolbar />
-          {/* <ToolbarFloating /> */}
+          >
+            <EditorEventListener
+              on={(event) => {
+                if (event.type === "mutation" && event.value) {
+                  setValue(event.value);
+                }
+              }}
+            />
+            <Toolbar />
+            {/* <ToolbarFloating /> */}
 
-          <PortableTextEditable
-            // className="focus:outline-none"
-            className="w-full rounded-md border border-input bg-transparent p-4 text-lg shadow-inner transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-white flex flex-col gap-y-4"
-            renderAnnotation={renderAnnotation}
-            renderStyle={renderStyle}
-            renderDecorator={renderDecorator}
-            renderBlock={renderBlock}
-            renderListItem={renderListItem}
-          />
-        </EditorProvider>
-        <div className="prose">
+            <PortableTextEditable
+              // className="focus:outline-none flex flex-col gap-y-4"
+              className="w-full rounded-md border border-input bg-transparent p-4 text-lg shadow-inner transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-white flex flex-col gap-y-4"
+              renderAnnotation={renderAnnotation}
+              renderStyle={renderStyle}
+              renderDecorator={renderDecorator}
+              renderBlock={renderBlock}
+              renderListItem={renderListItem}
+            />
+          </EditorProvider>
+        </div>
+        <div className="prose prose-sm">
           <pre>{value ? JSON.stringify(value, null, 2) : null}</pre>
         </div>
       </div>
