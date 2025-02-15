@@ -1,5 +1,5 @@
 import { ArrowRight, X } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { BlockAnnotationRenderProps, useEditor } from "@portabletext/editor";
 import { AllSchemaNameKeys } from "~/portableText/schemaDefinition";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
@@ -14,7 +14,6 @@ export function Link(props: BlockAnnotationRenderProps) {
     "value" in props && typeof props.value.url === "string"
       ? props.value.url
       : "";
-  const [value, setValue] = useState(initialValue);
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
@@ -24,7 +23,7 @@ export function Link(props: BlockAnnotationRenderProps) {
         if (open) {
           // Focus the input when the popover opens
           inputRef.current?.focus();
-        } else if (!value) {
+        } else if (!initialValue) {
           // Remove the annotation if the popover closes with no value
           editor.send({
             type: "annotation.remove",
@@ -41,15 +40,6 @@ export function Link(props: BlockAnnotationRenderProps) {
           onSubmit={(event) => {
             event.preventDefault();
             editor.send({
-              type: "annotation.add",
-              annotation: {
-                name: annotationName,
-                value: {
-                  url: value,
-                },
-              },
-            });
-            editor.send({
               type: "blur",
             });
           }}
@@ -61,11 +51,21 @@ export function Link(props: BlockAnnotationRenderProps) {
           <Input
             ref={inputRef}
             id={annotationName}
-            // type="url"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
+            value={initialValue}
+            onChange={(e) => {
+              const updatedValue = e.target.value;
+              editor.send({
+                type: "annotation.add",
+                annotation: {
+                  name: annotationName,
+                  value: {
+                    url: updatedValue,
+                  },
+                },
+              });
+            }}
           />
-          <Button disabled={!value} type="submit">
+          <Button disabled={!initialValue} type="submit">
             <span className="sr-only">Add {annotationName}</span>
             <ArrowRight size="4" />
           </Button>
